@@ -14,43 +14,20 @@ Django has been updated in Sentry 10 and previous scripts don't work anymore.
 Install
 -------
 
-Create **plugins** folder **next to your Dockerfile** of on-premise Sentry folder.
+Add this package to ``sentry/requirements.txt``
 
-Download or clone this repository and put it inside `plugins` folder (I am using `plugins/sentry-auth-gitlab-0.1.0`).
-
-So for example file
-
-.. code-block:: bash
-
-    __init__.py
-    
-will be at 
- 
-.. code-block:: bash
-
-    onpremise-sentry-root-folder/sentry/plugins/sentry-auth-gitlab-0.1.0/auth_gitlab/__init__.py
-
-Change Sentry `Dockerfile` to copy `plugins` folder to docker. Line
-
-.. code-block:: dockerfile
-
-    COPY . /usr/src/sentry
-    
-change to 
-
-.. code-block:: dockerfile
-
-  COPY . /usr/src/sentry
-  COPY plugins /usr/src/sentry/plugins
-  
-  
-Add package to requirements.txt file
- 
 .. code-block:: txt
 
     # Add plugins here
-    /usr/src/sentry/plugins/sentry-auth-gitlab-0.1.0
-  
+    sentry-auth-gitlab@https://github.com/cirmaciu/sentry-auth-gitlab/archive/master.zip#egg=sentry-auth-gitlab
+
+Alternatively, if you want to always have a specific version, replace "master" with the commit id of the version you want. For example:
+
+.. code-block:: txt
+
+    # Add plugins here
+    sentry-auth-gitlab@https://github.com/cirmaciu/sentry-auth-gitlab/archive/5be8aa7ab6698baf9d5de47d06f1216b71452060.zip#egg=sentry-auth-gitlab
+
 Setup Gitlab Auth for Sentry as mentioned in original documentation bellow
 
 Stop, rebuild and restart your Sentry docker containers to accept new configuration and plugins
